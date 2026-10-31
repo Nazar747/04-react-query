@@ -41,6 +41,7 @@ function App() {
 
   function handleSearch(query: string) {
     setNameMovie(query);
+    setPage(1);
   }
 
   function handleSelect(movie: Movie) {
@@ -55,7 +56,7 @@ function App() {
     <>
       <div className={css.app}>
         <SearchBar onSubmit={handleSearch} />
-        {isSuccess && (
+        {isSuccess && data.results.length !== 0 && (
           <ReactPaginate
             pageCount={data.total_pages}
             pageRangeDisplayed={5}
