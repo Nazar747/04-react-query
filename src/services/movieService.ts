@@ -3,9 +3,13 @@ import type { Movie } from "../types/movie";
 
 interface MoviesHttpResponse {
   results: Movie[];
+  total_pages: number;
 }
 
-async function fetchMovies(query: string): Promise<Movie[]> {
+async function fetchMovies(
+  query: string,
+  page: number,
+): Promise<MoviesHttpResponse> {
   const myKey = import.meta.env.VITE_TMDB_TOKEN;
 
   const { data } = await axios.get<MoviesHttpResponse>(
@@ -13,6 +17,7 @@ async function fetchMovies(query: string): Promise<Movie[]> {
     {
       params: {
         query,
+        page,
       },
       headers: {
         Authorization: `Bearer ${myKey}`,
@@ -20,7 +25,7 @@ async function fetchMovies(query: string): Promise<Movie[]> {
     },
   );
 
-  return data.results;
+  return data;
 }
 
 export default fetchMovies;
